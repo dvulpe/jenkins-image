@@ -1,0 +1,87 @@
+jenkins:
+  agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - ${ADMIN_PERMISSION}
+  clouds:
+    - ecs:
+        cluster: ${ECS_CLUSTER_ARN}
+        credentialsId: ""
+        jenkinsUrl: ${JENKINS_URL}
+        maxMemory: 4096
+        name: "jenkins-agents"
+        regionName: ${AWS_REGION}
+        tunnel: ${JENKINS_TUNNEL}
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+    - "jenkins.diagnostics.RootUrlNotSetMonitor"
+    - "jenkins.security.QueueItemAuthenticatorMonitor"
+    - "jenkins.security.s2m.MasterKillSwitchWarning"
+  labelAtoms:
+    - name: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: false
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    oic:
+      authorizationServerUrl: "https://gitlab.com/oauth/authorize"
+      clientId: ${OIDC_CLIENT_ID}
+      clientSecret: ${OIDC_CLIENT_SECRET}
+      disableSslVerification: false
+      emailFieldName: "email"
+      fullNameFieldName: "name"
+      groupsFieldName: "groups"
+      logoutFromOpenidProvider: false
+      scopes: "openid"
+      tokenServerUrl: "https://gitlab.com/oauth/token"
+      userInfoServerUrl: "https://gitlab.com/oauth/userinfo"
+      userNameField: "nickname"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites: []
+  views:
+    - all:
+        name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  sSHD:
+    port: -1
+unclassified:
+  buildDiscarders:
+    configuredBuildDiscarders:
+      - "jobBuildDiscarder"
+  buildStepOperation:
+    enabled: false
+  defaultFolderConfiguration:
+    healthMetrics:
+      - worstChildHealthMetric:
+          recursive: true
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    hookUrl: ${JENKINS_WEBHOOK_URL}
+  gitSCM:
+    createAccountBasedOnEmail: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
