@@ -49,6 +49,8 @@ matrix-auth:2.6.1
 matrix-project:1.16
 maven-plugin:3.6
 momentjs:1.1.1
+github-oauth:0.33
+oauth-credentials:0.4
 oic-auth:1.8
 okhttp-api:3.14.9
 parameterized-trigger:2.37
